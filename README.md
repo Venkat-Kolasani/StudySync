@@ -4,7 +4,7 @@ A collaborative platform for academic study groups that facilitates resource sha
 
 ## Project Overview
 
-StudyConnectivity is designed to address the challenges students face with organizing study materials, coordinating study sessions, and collaborating effectively with peers. Our platform provides an integrated solution with user profiles, study groups, resource sharing, and real-time communication.
+StudySync is designed to address the challenges students face with organizing study materials, coordinating study sessions, and collaborating effectively with peers. Our platform provides an integrated solution with user profiles, study groups, resource sharing, and real-time communication.
 
 ## Features
 
