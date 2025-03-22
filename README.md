@@ -1,4 +1,4 @@
-# StudyConnectivity
+# StudySync
 
 A collaborative platform for academic study groups that facilitates resource sharing, study session scheduling, and group communication.
 
