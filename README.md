@@ -33,14 +33,13 @@ StudySync is designed to address the challenges students face with organizing st
 
 ```sh
 # Clone the repository
-git clone https://github.com/your-username/studyconnectivity.git
+git clone https://github.com/Venkat-Kolasani/StudySync.git
 
 # Navigate to project directory
-cd studyconnectivity
+cd StudySync
 
 # Install dependencies
 npm install
 
 # Start development server
 npm run dev
-```
