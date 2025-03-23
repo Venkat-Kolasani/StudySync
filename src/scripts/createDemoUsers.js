@@ -3,13 +3,6 @@
 
 /**
  * This script creates demo users for testing purposes.
- * Run it with: node src/scripts/createDemoUsers.js
- * 
- * IMPORTANT: You need to replace the placeholder below with your Supabase service role key.
- * You can find your service role key in your Supabase dashboard:
- * 1. Go to https://supabase.com/dashboard/project/sdhgfhqamtbbmiyvtfvb/settings/api
- * 2. Look for "service_role key" (Project API keys section)
- * 3. Copy the key and replace 'SERVICE_ROLE_KEY_NEEDED_HERE' below
  */
 
 const { createClient } = require('@supabase/supabase-js');
