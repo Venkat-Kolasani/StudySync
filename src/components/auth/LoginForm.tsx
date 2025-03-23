@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,12 +26,14 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => {
   const { toast } = useToast();
   const { login, isLoading: authLoading, isAuthenticated } = useAuth();
   
-  // Combined loading state from local and auth context
-  const isLoading = localLoading || authLoading;
+  // Only consider localLoading for button state
+  // This fixes the issue where the button shows "Signing in..." without user action
+  const isLoading = localLoading;
   
   // If user becomes authenticated, call onSuccess
   useEffect(() => {
     if (isAuthenticated) {
+      console.log("User authenticated, redirecting...");
       onSuccess();
     }
   }, [isAuthenticated, onSuccess]);
@@ -51,21 +52,32 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => {
   });
   
   const onSubmit = async (data: LoginFormValues) => {
-    if (isLoading) return; // Prevent multiple submissions
+    if (localLoading) return; // Prevent multiple submissions
     
     setLocalLoading(true);
     try {
-      await login(data.email, data.password);
-      // Successful login will trigger the useEffect above
-      // through the isAuthenticated state change
-    } catch (error) {
+      const result = await login(data.email, data.password);
+      console.log("Login successful, calling onSuccess directly");
+      
+      // Call onSuccess directly after successful login
+      // This ensures navigation happens even if the isAuthenticated state update is delayed
+      onSuccess();
+    } catch (error: any) {
       console.error('Login error:', error);
+      
+      // Show user-friendly error message
+      toast({
+        title: "Login failed",
+        description: error?.message || "Please check your credentials and try again.",
+        variant: "destructive"
+      });
+    } finally {
       setLocalLoading(false);
     }
   };
 
   const handleSocialLogin = async (provider: string) => {
-    if (isLoading) return; // Prevent multiple submissions
+    if (localLoading) return; // Prevent multiple submissions
     
     setLocalLoading(true);
     try {
@@ -76,14 +88,13 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => {
         title: "Coming soon!",
         description: `${provider} login will be available soon.`,
       });
-      
-      setLocalLoading(false);
     } catch (error) {
       toast({
         title: "Something went wrong.",
         description: `Your ${provider} login request failed. Please try again.`,
         variant: "destructive",
       });
+    } finally {
       setLocalLoading(false);
     }
   };
@@ -97,17 +108,9 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel htmlFor="email-input">Email</FormLabel>
                 <FormControl>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                    <Input 
-                      placeholder="your.email@example.com" 
-                      className="pl-10 focus-ring" 
-                      {...field} 
-                      disabled={isLoading}
-                    />
-                  </div>
+                  <Input id="email-input" placeholder="email@example.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,16 +122,16 @@ const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel htmlFor="password-input">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Lock className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
                     <Input 
+                      id="password-input"
                       type="password" 
                       className="pl-10 focus-ring" 
                       placeholder="********" 
                       {...field} 
-                      disabled={isLoading}
                     />
                   </div>
                 </FormControl>
