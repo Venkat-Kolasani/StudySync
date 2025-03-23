@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Navbar from '@/components/layout/Navbar';
 import PageTransition from '@/components/shared/PageTransition';
+import ShareResourceModal from '@/components/resources/ShareResourceModal';
 
 const Dashboard = () => {
+  // State for the share resource modal
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  
   // Mock data for dashboard
   const upcomingSessions = [
     { id: '1', name: 'Calculus Study Group', date: 'Today', time: '3:00 PM', subject: 'Mathematics' },
@@ -26,6 +30,16 @@ const Dashboard = () => {
     { id: '2', message: 'Algorithm Design session rescheduled', time: '1 hour ago' },
     { id: '3', message: 'Lisa shared new resources in Quantum Physics', time: '3 hours ago' },
   ];
+  
+  // Function to open the share resource modal
+  const openShareModal = () => {
+    setIsShareModalOpen(true);
+  };
+  
+  // Function to close the share resource modal
+  const closeShareModal = () => {
+    setIsShareModalOpen(false);
+  };
 
   return (
     <div className="min-h-screen">
@@ -148,7 +162,7 @@ const Dashboard = () => {
                     No recent study materials
                   </p>
                   <div className="flex justify-center">
-                    <Button variant="outline">
+                    <Button variant="outline" onClick={openShareModal}>
                       <Plus className="mr-1.5 h-4 w-4" />
                       Share a Resource
                     </Button>
@@ -233,6 +247,11 @@ const Dashboard = () => {
           </div>
         </main>
       </PageTransition>
+      {/* Share Resource Modal */}
+      <ShareResourceModal 
+        isOpen={isShareModalOpen} 
+        onClose={closeShareModal} 
+      />
     </div>
   );
 };
