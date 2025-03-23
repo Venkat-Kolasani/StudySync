@@ -43,3 +43,16 @@ npm install
 
 # Start development server
 npm run dev
+```
+
+## Deployment
+
+StudySync can be deployed to Vercel with just a few clicks:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FVenkat-Kolasani%2FStudySync)
+
+For step-by-step instructions on deploying to Vercel, see [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md).
+
+## License
+
+MIT
