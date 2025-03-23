@@ -48,6 +48,7 @@ const GroupForm = ({ onSubmit, isSubmitting = false }: GroupFormProps) => {
   const [tagInput, setTagInput] = useState('');
   
   // Initialize form
+  // Initialize form with validation
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -80,11 +81,13 @@ const GroupForm = ({ onSubmit, isSubmitting = false }: GroupFormProps) => {
   
   // Handle tags
   const addTag = () => {
-    if (tagInput.trim() !== '' && !tags.includes(tagInput.trim()) && tags.length < 10) {
-      const newTags = [...tags, tagInput.trim()];
+    const trimmedTag = tagInput.trim();
+    if (trimmedTag !== '' && !tags.includes(trimmedTag) && tags.length < 10) {
+      const newTags = [...tags, trimmedTag];
       setTags(newTags);
-      form.setValue('tags', newTags);
       setTagInput('');
+      // Update form value
+      form.setValue('tags', newTags, { shouldValidate: true });
     }
   };
   
@@ -102,8 +105,15 @@ const GroupForm = ({ onSubmit, isSubmitting = false }: GroupFormProps) => {
   };
   
   // Handle form submission
-  const handleSubmit = (values: FormData) => {
-    onSubmit(values);
+  const handleSubmit = async (values: FormData) => {
+    console.log('Form values:', values);
+    // Ensure tags are included in the submission
+    const formData = {
+      ...values,
+      tags: tags, // Use the tags from state
+    };
+    console.log('Submitting form data:', formData);
+    onSubmit(formData);
   };
 
   return (

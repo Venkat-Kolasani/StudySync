@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import GroupDetails from "./pages/GroupDetails";
 import Resources from "./pages/Resources";
 import Sessions from "./pages/Sessions";
+import TestGroupCreation from "./pages/TestGroupCreation";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
               <Route path="/groups/:id" element={<GroupDetails />} />
               <Route path="/groups/:id/resources" element={<Resources />} />
               <Route path="/groups/:id/sessions" element={<Sessions />} />
+              <Route path="/test-group" element={<TestGroupCreation />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AnimatePresence>

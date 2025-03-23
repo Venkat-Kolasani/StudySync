@@ -90,7 +90,7 @@ const Groups = () => {
             </div>
             
             <Button className="mt-4 md:mt-0" asChild>
-              <Link to={isAuthenticated ? "/groups/create" : "/"}>
+              <Link to="/groups/create">
                 <Plus className="mr-2 h-4 w-4" />
                 Create New Group
               </Link>
