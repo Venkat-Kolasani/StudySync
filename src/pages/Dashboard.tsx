@@ -7,10 +7,14 @@ import { Badge } from '@/components/ui/badge';
 import Navbar from '@/components/layout/Navbar';
 import PageTransition from '@/components/shared/PageTransition';
 import ShareResourceModal from '@/components/resources/ShareResourceModal';
+import CreateSessionModal from '@/components/sessions/CreateSessionModal';
+import InviteFriendsModal from '@/components/friends/InviteFriendsModal';
 
 const Dashboard = () => {
-  // State for the share resource modal
+  // State for modals
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   
   // Mock data for dashboard
   const upcomingSessions = [
@@ -31,15 +35,15 @@ const Dashboard = () => {
     { id: '3', message: 'Lisa shared new resources in Quantum Physics', time: '3 hours ago' },
   ];
   
-  // Function to open the share resource modal
-  const openShareModal = () => {
-    setIsShareModalOpen(true);
-  };
+  // Modal control functions
+  const openShareModal = () => setIsShareModalOpen(true);
+  const closeShareModal = () => setIsShareModalOpen(false);
   
-  // Function to close the share resource modal
-  const closeShareModal = () => {
-    setIsShareModalOpen(false);
-  };
+  const openSessionModal = () => setIsSessionModalOpen(true);
+  const closeSessionModal = () => setIsSessionModalOpen(false);
+  
+  const openInviteModal = () => setIsInviteModalOpen(true);
+  const closeInviteModal = () => setIsInviteModalOpen(false);
 
   return (
     <div className="min-h-screen">
@@ -229,15 +233,27 @@ const Dashboard = () => {
               <section className="glass-dark rounded-xl p-6">
                 <h2 className="text-xl font-bold mb-3">Quick Actions</h2>
                 <div className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start"
+                    onClick={openSessionModal}
+                  >
                     <Plus className="mr-2 h-4 w-4" />
                     Create Study Session
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start"
+                    onClick={openInviteModal}
+                  >
                     <Users className="mr-2 h-4 w-4" />
                     Invite Friends
                   </Button>
-                  <Button variant="outline" className="w-full justify-start">
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start"
+                    onClick={openShareModal}
+                  >
                     <BookOpen className="mr-2 h-4 w-4" />
                     Upload Study Material
                   </Button>
@@ -247,10 +263,18 @@ const Dashboard = () => {
           </div>
         </main>
       </PageTransition>
-      {/* Share Resource Modal */}
+      {/* Modals */}
       <ShareResourceModal 
         isOpen={isShareModalOpen} 
         onClose={closeShareModal} 
+      />
+      <CreateSessionModal 
+        isOpen={isSessionModalOpen} 
+        onClose={closeSessionModal} 
+      />
+      <InviteFriendsModal 
+        isOpen={isInviteModalOpen} 
+        onClose={closeInviteModal} 
       />
     </div>
   );
